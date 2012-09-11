@@ -1,0 +1,25 @@
+---
+title: Devices
+inMenu: true
+orderInfo: 10
+---
+h2. Device list
+
+Here you can switch the plug
+
+
+
+<FORM name="Testform" METHOD=post ACTION="">
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld1" value="A"> <b id="tfeld1"></b>
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld2" value="B"> <b id="tfeld2"></b>
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld3" value="C"> <b id="tfeld3"></b>
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld4" value="D"> <b id="tfeld4"></b>
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld5" value="E"> <b id="tfeld5"></b>
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld6" value="F"> <b id="tfeld6"></b>
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld7" value="G"> <b id="tfeld7"></b>
+<BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld8" value="H"> <b id="tfeld8"></b>
+<BR><BR>
+</FORM>
+
+
+<p id="info">&nbsp;</p>

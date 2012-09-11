@@ -1,0 +1,16 @@
+# gpio dev interface
+/dev/gpio     d    755    0    0
+/dev/gpio/0  c    644    0    0    250   0
+/dev/gpio/1  c    644    0    0    250   1
+/dev/gpio/2  c    644    0    0    250   2
+# RxD /dev/gpio/3  c    644    0    0    250   3
+# NC  /dev/gpio/4  c    644    0    0    250   4
+/dev/gpio/5  c    664    0    0    250   5
+/dev/gpio/6  c    644    0    0    250   6
+# TxD /dev/gpio/7  c    644    0    0    250   7
+# NC /dev/gpio/8  c    644    0    0    250   8
+# i2c SCL   /dev/gpio/9  c    644    0    0    250   9
+# NC /dev/gpio/10 c    644    0    0    250   10
+# NC /dev/gpio/11 c    644    0    0    250   11
+# i2c SDA /dev/gpio/12 c    644    0    0    250   12
+/dev/gpio/13 c    644    0    0    250   13

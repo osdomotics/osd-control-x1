@@ -1,0 +1,43 @@
+---
+title: Option
+inMenu: true
+orderInfo: 20
+---
+
+
+h2. Network
+
+Here is the place where you can configure the network.
+
+<FORM name="networkform" METHOD=post ACTION="">
+HOSTNAME:<BR><INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
+IP:<BR><INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
+GW:<BR><INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
+<span class="caps">MASK</span>:<BR><INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
+<BR><INPUT TYPE="checkbox" NAME="Feld4" value="DHCP"> DHCP <BR><BR>
+DNS1:<BR><INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
+DNS2:<BR><INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
+ServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
+</FORM>
+<BUTTON> OK </BUTTON>
+<BUTTON> RESET </BUTTON>
+<BR>
+
+h2. Devices
+
+Here is the place where you can configure the devices.
+
+<FORM name="deviceform" METHOD=post ACTION="">
+A0:<INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
+B0:<INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
+C0:<INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
+D0:<INPUT NAME="Feld4" SIZE=20 MAXLENGHT=30><BR>
+A1:<INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
+B1:<INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
+C1:<INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
+D1:<INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
+</FORM>
+<BUTTON> OK </BUTTON>
+<BUTTON> RESET </BUTTON>
+
+<div id="ausgabe"></div>
