@@ -1,6 +1,6 @@
 menu "Kernel external modules"
 source modules/charlcd/Kconfig
-source modules/gpio/Kconfig
+source build/modules/gpio/Kconfig
 source modules/minimal/Kconfig
 source modules/redpine/Kconfig
 source modules/uart_appkit/Kconfig
