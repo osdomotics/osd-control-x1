@@ -1,0 +1,12 @@
+config DEL_KMOD_GPIO
+	bool gpio
+	default y
+	help
+	  Example GPIO kernel module
+
+	  Provides access to gpio's from user space applications
+
+config DEL_KMOD_GPIO_DIR
+	string
+	depends on DEL_KMOD_GPIO
+	default gpio

@@ -1,0 +1,84 @@
+#!/bin/sh -l
+#===============================================================================
+#
+#  ifup
+#
+#  Copyright (C) 2008-2009 by Digi International Inc.
+#  All rights reserved.
+#
+#  This program is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License version 2 as published by
+#  the Free Software Foundation.
+#
+#
+#  !Description: Bring network interfaces up
+#
+#===============================================================================
+
+set -e
+
+# loopback methods are directly handled by ifup
+[ "${METHOD}" = "loopback" ] && exit 0
+
+# bring interface up [static]
+ifup_static() {
+	ifconfig ${IFACE} ${ipaddr} netmask ${netmask} ${macaddr} up
+	gatewayip="$(ubootenv -p gatewayip | sed 's,^gatewayip=,,g')"
+	if [ "${gatewayip}" != "0.0.0.0" ]; then
+		route add default gw ${gatewayip} 2>/dev/null || true
+	fi
+}
+
+# bring interface up [dhcp]
+ifup_dhcp() {
+	if [ "${IFACE}" = "eth0" ]; then
+		if grep -q "root=nfs" /proc/cmdline; then
+			echo "  ${IFACE}: dhcp ignored because of nfsroot"
+			return
+		fi
+	fi
+	[ -n "${macaddr}" ] && ifconfig ${IFACE} ${macaddr} up
+	udhcpc -p /var/run/udhcpc.${IFACE}.pid -b -S -i ${IFACE} >/dev/null 2>&1 &
+	if [ "$?" != "0" ]; then
+		echo "  ${IFACE}: udhcpc error"
+	fi
+}
+
+if [ ! -d "/sys/class/net/${IFACE}" ]; then
+	logger -t ifup ${IFACE} not available
+	exit 0
+fi
+
+# i.mx51 based platforms may have two ethernet interfaces, so we should verify
+# which driver is each 'ethX' to get the correct parameters.
+if [ "${DEL_PLATFORM/w}" = "ccmx51js" -a "${IFACE%%[0-9]*}" = "eth" ]; then
+	driver="$(readlink -f -n /sys/class/net/${IFACE} | \
+			sed 's,/sys/devices/platform/\(.\{3\}\).*,\1,g')"
+fi
+
+case "${IFACE}:${driver}" in
+eth0: | *:fec)
+	ipaddr="$(ubootenv -p ipaddr | sed 's,^ipaddr=,,g')"
+	netmask="$(ubootenv -p netmask | sed 's,^netmask=,,g')"
+	dhcp="$(ubootenv -p dhcp | sed 's,^dhcp=,,g')"
+	;;
+eth1: | *:sms)
+	ipaddr="$(ubootenv -p ipaddr1 | sed 's,^ipaddr1=,,g')"
+	netmask="$(ubootenv -p netmask1 | sed 's,^netmask1=,,g')"
+	dhcp="$(ubootenv -p dhcp1 | sed 's,^dhcp1=,,g')"
+	macaddr="$(nvram print module ethaddr3 | sed 's,ethaddr3=,hw ether ,g')"
+	;;
+wlan0:)
+	ipaddr="$(ubootenv -p ipaddr_wlan | sed 's,^ipaddr_wlan=,,g')"
+	netmask="$(ubootenv -p netmask_wlan | sed 's,^netmask_wlan=,,g')"
+	dhcp="$(ubootenv -p dhcp_wlan | sed 's,^dhcp_wlan=,,g')"
+	;;
+esac
+
+[ -z "${ipaddr}" -o -z "${netmask}" -o -z "${dhcp}" ] && exit 1
+
+if [ "${dhcp}" = "off" ]; then
+	ifup_static
+elif [ "${dhcp}" = "on" ]; then
+	ifup_dhcp
+fi

@@ -1,0 +1,62 @@
+export PATH:=$(DEL_TOOL_DIR)/bin-ccache:$(DEL_TOOL_DIR)/bin:$(DEL_BASE_DIR)/scripts:$(PATH)
+export CCACHE_DIR=$(DEL_PROJ_DIR)/build/.ccache
+export RSYNC=rsync --exclude-from=$(DEL_BASE_DIR)/scripts/rsync_exclude.txt
+
+NR_CPUS = $(words $(wildcard /sys/devices/system/cpu/cpu[0-9]*))
+MAKE_JOBS = $(if $(filter-out 0 1, $(NR_CPUS)),-j$(NR_CPUS))
+
+# Verbose options...
+ifdef V
+  ifeq ("$(origin V)", "command line")
+    VERBOSE=1
+  endif
+else
+  MAKEFLAGS += --no-print-directory
+  Q=@
+endif
+export VERBOSE
+
+SHELL = /bin/bash
+SHELL_EXPORT =\
+	DEL_BASE_DIR=$(DEL_BASE_DIR) \
+	DEL_TOOL_DIR=$(DEL_SYSR_DIR) \
+	DEL_SYSR_DIR=$(DEL_SYSR_DIR) \
+	DEL_KERN_DIR=$(DEL_KERN_DIR) \
+	DEL_PROJ_DIR=$(DEL_PROJ_DIR) \
+	DEL_PLATFORM=$(DEL_PLATFORM) \
+	DEL_TFTP_DIR=$(DEL_TFTP_DIR) \
+	DEL_NFS_DIR=$(DEL_NFS_DIR)
+
+del_cmds    = @. $(DEL_BASE_DIR)/scripts/del_cmds.sh && $(1)
+del_cmds_sh = $(shell $(SHELL_EXPORT) . $(DEL_BASE_DIR)/scripts/del_cmds.sh && $(1))
+
+.PHONY: build rebuild install xconfig clean
+
+all: build
+
+build: $(foreach target,$(SUBPRJ_LIST),build_$(target))
+	@echo "+------------------------------+"
+	@echo "|    Make project finished     |"
+	@echo "+------------------------------+"
+
+rebuild: $(foreach target,$(SUBPRJ_LIST),rebuild_$(target))
+	@echo "+------------------------------+"
+	@echo "|   Rebuild project finished   |"
+	@echo "+------------------------------+"
+
+install: $(foreach target,$(SUBPRJ_LIST),install_$(target))
+	@echo "+--------------------------------+"
+	@echo "|    Install project finished    |"
+	@echo "+--------------------------------+"
+
+config xconfig menuconfig gconfig oldconfig:
+	$(if $(findstring kernel,$(SUBPRJ_LIST)), $(call del_cmds,update_kmods_kconfig))
+	$(Q) $(MAKE) -C $(DEL_BASE_DIR)/scripts/ O=$(DEL_PROJ_DIR)/build/ $@ \
+		KCONFIG_CONFIG=.config-$(DEL_PLATFORM) \
+		KBUILD_KCONFIG=$(DEL_PROJ_DIR)/configs/Kconfig 2>/dev/null
+	$(if $(findstring uboot,$(SUBPRJ_LIST)), $(call del_cmds,parse_config_uboot))
+	$(if $(findstring kernel,$(SUBPRJ_LIST)), $(call del_cmds,parse_config_kernel))
+	$(if $(findstring kernel,$(SUBPRJ_LIST)), $(call del_cmds,copy_kmods))
+	$(if $(findstring apps,$(SUBPRJ_LIST)), $(call del_cmds,copy_apps))
+
+clean: $(foreach target,$(SUBPRJ_LIST),$(target)_clean)

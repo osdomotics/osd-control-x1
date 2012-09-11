@@ -1,0 +1,72 @@
+#!/bin/sh
+#===============================================================================
+#
+#  update_firmware
+#
+#  Copyright (C) 2011 by Digi International Inc.
+#  All rights reserved.
+#
+#  This program is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License version 2 as published by
+#  the Free Software Foundation.
+#
+#
+#  !Description: Update firmware in a dual-boot system
+#
+#===============================================================================
+
+scriptname="$(basename ${0})"
+
+# Show help
+usage() {
+	cat <<_EOF_
+Update firmware in a dual-boot system.
+
+Usage: ${scriptname} [OPTIONS]
+
+        -k      Kernel image
+        -r      Rootfs image
+
+_EOF_
+}
+
+while getopts "k:r:" c; do
+	case "${c}" in
+		k) kernel_image="${OPTARG%/}";;
+		r) rootfs_image="${OPTARG%/}";;
+		*) usage; exit;;
+	esac
+done
+
+if [ -z "${kernel_image}${rootfs_image}" ]; then
+	usage
+	exit
+fi
+
+# Get current boot partition
+current_boot="$(nvram print dualboot boot_part | sed 's,boot_part=,,g')"
+
+# Set next boot partition
+if [ "${current_boot}" = "0" ]; then
+	next_boot="1"
+elif [ "${current_boot}" = "1" ]; then
+	next_boot="0"
+else
+	printf "\n[ERROR] current_boot out of expected range\n\n"
+	exit 1
+fi
+
+# Get actual kernel and rootfs MTD partitions
+kernel_mtd="$(cat /proc/mtd | sed -ne "/Kernel${next_boot}/{s,^mtd\([0-9]\+\)[^0-9].*,\1,g;T;p}")"
+rootfs_mtd="$(cat /proc/mtd | sed -ne "/RootFS${next_boot}/{s,^mtd\([0-9]\+\)[^0-9].*,\1,g;T;p}")"
+
+# Set update_flash command line arguments
+[ -n "${kernel_image}" ] && update_flash_args="${kernel_image} ${kernel_mtd}"
+[ -n "${rootfs_image}" ] && update_flash_args="${update_flash_args} ${rootfs_image} ${rootfs_mtd}"
+
+# Flash images and update NVRAM (in case flashing was correct)
+if update_flash ${update_flash_args}; then
+	nvram set dualboot "last_updated=${next_boot}" "avail${next_boot}=1"
+else
+	printf "\n[ERROR] update_flash failed\n\n"
+fi

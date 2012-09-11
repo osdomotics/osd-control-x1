@@ -1,0 +1,6 @@
+export $(grep '^DEL_PLATFORM' /etc/version)
+
+# Source configuration files from /etc/profile.d
+for i in /etc/profile.d/*.sh ; do
+	[ -r "$i" ] && . ${i}
+done

@@ -1,0 +1,6 @@
+# Device nodes for ccw9p9215js
+
+# led2 and button2
+/dev/gpio     d    755    0    0
+/dev/gpio/84  c    644    0    0    240   84
+/dev/gpio/85  c    644    0    0    240   85

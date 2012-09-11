@@ -1,0 +1,32 @@
+#!/bin/sh -l
+
+# export quietboot="$(ubootenv -p std_bootarg | sed -n -e /quiet/c\yes)"
+export quietboot="$(sed -n -e /quiet/c\yes /proc/cmdline)"
+
+# Start all init scripts in /etc/init.d
+# executing them in numerical order.
+#
+for i in /etc/init.d/S??* ;do
+
+    # Ignore dangling symlinks (if any).
+    [ ! -f "$i" ] && continue
+
+    case "$i" in
+        *.sh)
+            # Source shell script for speed.
+            (
+                trap - INT QUIT TSTP
+                set start
+                . $i
+            )
+            ;;
+        *)
+            # No sh extension, so fork subprocess.
+            $i start
+            ;;
+    esac
+done
+
+# Restore ALSA
+ALSACTL="$(which alsactl)"
+[ -f "/sys/class/sound/card0/id" -a -f "${ALSACTL}" ] && ${ALSACTL} --no-init-fallback -f /etc/alsa/asound.play restore

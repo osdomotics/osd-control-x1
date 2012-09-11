@@ -1,0 +1,18 @@
+config DEL_CME9210JS
+	def_bool y
+
+menu "Linux Kernel Configuration"
+source kernel/Kconfig
+source kernel/linux-2.6.35/arch/arm/Kconfig
+endmenu
+
+config DEL_ENDCONFIG_LINUX
+	def_bool y
+
+menu "External Modules Configuration"
+source build/modules/Kconfig
+endmenu
+
+menu "Rootfs Configuration"
+source rootfs/Kconfig
+endmenu

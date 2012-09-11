@@ -1,0 +1,6 @@
+# Device nodes for ccw9cjsnand
+
+# led2 and button2 (gpio_test required)
+/dev/gpio     d    755    0    0
+/dev/gpio/49  c    644    0    0    240   49
+/dev/gpio/69  c    644    0    0    240   69

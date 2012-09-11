@@ -1,0 +1,67 @@
+################################################################################
+##
+## Rootfs makefile
+##
+################################################################################
+.PHONY: build_rootfs rebuild_rootfs
+
+build_rootfs: rootfs_base rootfs_extras rootfs_platform add_files check_libs rootfs_strip rootfs_version
+	@printf "\n--- Make rootfs finished ---\n\n"
+
+rebuild_rootfs: rootfs_clean build_rootfs
+
+rootfs_base:
+	$(call del_cmds,make_rootfs_base)
+
+rootfs_extras:
+	$(call del_cmds,install_pkgs)
+
+rootfs_platform:
+	$(call del_cmds,make_rootfs_platform)
+
+add_files:
+	$(Q) $(DEL_PROJ_DIR)/configs/add_files.sh
+
+rootfs_clean:
+	$(Q) rm -rf $(DEL_PROJ_DIR)/build/rootfs/*
+
+check_libs:
+	$(call del_cmds,do_$@)
+
+rootfs_strip:
+	@# Use 'if ...' instead of 'dd ... && ...' to be sure that the result status of the whole
+	@# command is success (== 0). The short version of the command could give and '== 1' result
+	@# status leading to a makefile error.
+	$(Q) for i in $$(find $(DEL_PROJ_DIR)/build/rootfs -type f -not -name 'libthread_db*.so'); do \
+		if dd if=$$i bs=1 skip=1 count=3 2>/dev/null | grep -qs 'ELF'; then \
+			arm-linux-strip --strip-unneeded $$i; \
+		fi; \
+	done
+
+rootfs_version: del_version=$(shell sed -ne 's/^toolchain_version=\(.*\)$$/\1/g;T;p' $(DEL_BASE_DIR)/docs/version.txt)
+rootfs_version: build_timestamp=$(shell date +%Y%m%d%H%M)
+rootfs_version:
+	$(Q) printf "DEL_VERSION=$(del_version)\n" > $(DEL_PROJ_DIR)/build/rootfs/etc/version
+	$(Q) printf "DEL_TAG=$(DEL_TAG)\n" >> $(DEL_PROJ_DIR)/build/rootfs/etc/version
+	$(Q) printf "DEL_BUILD_TIMESTAMP=$(build_timestamp)\n" >> $(DEL_PROJ_DIR)/build/rootfs/etc/version
+	$(Q) printf "DEL_PLATFORM=$(DEL_PLATFORM)\n" >> $(DEL_PROJ_DIR)/build/rootfs/etc/version
+
+rootfs_images:
+	$(Q) make_images.sh --rootfs
+
+install_rootfs: check_libs rootfs_strip rootfs_version rootfs_images rootfs_tftpboot rootfs_nfsroot
+	@printf "\n--- Install rootfs finished ---\n\n"
+
+rootfs_tftpboot:
+ifneq ($(strip $(wildcard $(DEL_TFTP_DIR))),)
+	$(call del_cmds,install_imgs_rootfs)
+else
+	$(info TFTP directory not found, rootfs image not installed.)
+endif
+
+rootfs_nfsroot:
+ifneq ($(strip $(wildcard $(DEL_NFS_DIR))),)
+	$(Q) $(RSYNC) -auW --delete $(DEL_PROJ_DIR)/build/rootfs/ $(DEL_NFS_DIR)
+else
+	$(info NFS directory not found, nfs-rootfs not installed.)
+endif

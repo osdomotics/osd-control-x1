@@ -1,0 +1,6 @@
+# Device nodes for cc9p9360js
+
+# led2 and button2 (gpio_test required)
+/dev/gpio     d    755    0    0
+/dev/gpio/66  c    644    0    0    240   66
+/dev/gpio/68  c    644    0    0    240   68

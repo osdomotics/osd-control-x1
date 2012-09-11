@@ -1,0 +1,69 @@
+################################################################################
+##
+## Kernel makefile
+##
+################################################################################
+.PHONY: build_kernel rebuild_kernel
+
+INSTALL_MOD_PATH = $(strip $(wildcard $(DEL_PROJ_DIR)/build/rootfs))
+DEL_KMODS = $(patsubst %/,%,$(dir $(strip $(wildcard $(DEL_PROJ_DIR)/build/modules/*/Makefile))))
+KERNEL_SRCS = -C $(DEL_KERN_DIR) O=$(DEL_PROJ_DIR)/build/kernel
+KERNEL_MAKE_ARGS = $(MAKE_JOBS) $(KERNEL_SRCS) ARCH=arm CROSS_COMPILE=arm-linux-
+export KERNELVERSION = $(shell $(MAKE) $(KERNEL_SRCS) -s kernelversion)
+
+build_kernel: kernel kernel_modules kernel_images
+	@printf "\n--- Make kernel finished ---\n\n"
+
+rebuild_kernel: kernel_clean build_kernel
+
+kernel:
+	$(Q) $(MAKE) $(KERNEL_MAKE_ARGS) uImage
+ifneq ($(findstring $(DEL_PLATFORM),cpx2 mx28_evk),)
+	$(Q) $(MAKE) $(KERNEL_MAKE_ARGS) sbImage
+	$(Q) $(MAKE) $(KERNEL_MAKE_ARGS) sbivtImage
+endif
+
+kernel_oldconfig:
+	$(Q) $(MAKE) $(KERNEL_MAKE_ARGS) oldconfig 2>/dev/null
+
+ifeq ($(call del_cmds_sh,get_config_value MODULES),y)
+kernel_modules:
+	$(Q) $(MAKE) $(KERNEL_MAKE_ARGS) modules
+	$(Q) $(foreach kmod, $(DEL_KMODS),$(MAKE) $(KERNEL_MAKE_ARGS) M=$(kmod);)
+
+kernel_modules_install: KERNELRELEASE = $(shell $(MAKE) $(KERNEL_SRCS) -s kernelrelease)
+kernel_modules_install:
+ifneq ($(INSTALL_MOD_PATH),)
+	$(Q) $(MAKE) $(KERNEL_MAKE_ARGS) INSTALL_MOD_PATH=$(INSTALL_MOD_PATH) modules_install
+	@# Install external kernel modules. We run an extra 'make' round in case the makefile
+	@# has any rule available (magic '##-DEL:' found). This is sometimes needed for example
+	@# to install firmware binaries.
+	$(Q) for i in $(DEL_KMODS); do \
+		$(MAKE) $(KERNEL_MAKE_ARGS) M=$${i} INSTALL_MOD_PATH=$(INSTALL_MOD_PATH) modules_install; \
+		if grep -qs '##-DEL:' $${i}/Makefile; then \
+			$(MAKE) -C $${i} INSTALL_MOD_PATH=$(INSTALL_MOD_PATH); \
+		fi; \
+	done
+	$(Q) rm -f $(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)/source
+	$(Q) rm -f $(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)/build
+else
+	$(warning Rootfs directory does not exist. Kernel modules not installed)
+endif
+else
+kernel_modules kernel_modules_install:
+	@printf "\n$@: CONFIG_MODULES disabled in the configuration\n\n"
+endif
+
+kernel_images:
+	$(Q) make_images.sh --kernel
+
+kernel_clean:
+	$(Q) $(MAKE) $(KERNEL_MAKE_ARGS) clean
+
+install_kernel: $(if $(findstring rootfs,$(SUBPRJ_LIST)),kernel_modules_install)
+ifneq ($(wildcard $(DEL_TFTP_DIR)),)
+	$(call del_cmds,install_imgs_kernel)
+	@printf "\n--- Install kernel finished ---\n\n"
+else
+	$(info TFTP directory not found, kernel image not installed.)
+endif

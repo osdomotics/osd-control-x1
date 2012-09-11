@@ -1,0 +1,37 @@
+#!/bin/sh
+#===============================================================================
+#
+#  ts
+#
+#  Copyright (C) 2010 by Digi International Inc.
+#  All rights reserved.
+#
+#  This program is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License version 2 as published by
+#  the Free Software Foundation.
+#
+#
+#  !Description: symlink touchscreen devices
+#
+#===============================================================================
+source /etc/profile.d/01.functions.sh
+
+# ${ACTION} is empty on scanning mode (mdev -s), exit otherwise
+[ -n "${ACTION}" ] && exit
+
+mdev=$(basename ${MDEV})
+
+if echo "${DEL_PLATFORM}" | grep -qs 'mx51'; then
+	# Read GPIO value for touch selection
+	_touch_select="$(imx51_touch_selection)"
+	if grep -qs 'mxc_ts' /sys/class/input/${mdev}/device/name; then
+		[ "${_touch_select}" = "0" ] && ln -sf ${mdev} /dev/input/ts1
+		[ "${_touch_select}" = "1" ] && ln -sf ${mdev} /dev/input/ts0
+	fi
+	if grep -qs 'ADS784x' /sys/class/input/${mdev}/device/name; then
+		[ "${_touch_select}" = "0" ] && ln -sf ${mdev} /dev/input/ts0
+		[ "${_touch_select}" = "1" ] && ln -sf ${mdev} /dev/input/ts1
+	fi
+else
+	grep -qs 'Touch' /sys/class/input/${mdev}/device/name && ln -sf ${mdev} /dev/input/ts0
+fi

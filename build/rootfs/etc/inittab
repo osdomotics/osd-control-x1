@@ -1,0 +1,17 @@
+# Early mount proc to be able to parse /proc/cmdline in bootscripts
+::sysinit:/bin/mount -t proc proc /proc
+
+# Start any script in init.d
+::sysinit:/etc/init.d/rcS
+
+# Start telnet daemon.
+::sysinit:/bin/sh -l -c '/usr/sbin/telnetd -l /bin/sh'
+
+# Start busybox console
+::respawn:/bin/cttyhack /bin/login -f root
+
+# Stuff to do for the 3-finger salute
+::ctrlaltdel:/sbin/reboot
+
+# Save hwclock on 'reboot/halt'
+null::shutdown:/sbin/hwclock -w

@@ -1,0 +1,54 @@
+#!/bin/sh -l
+#===============================================================================
+#
+#  ifdown
+#
+#  Copyright (C) 2009 by Digi International Inc.
+#  All rights reserved.
+#
+#  This program is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU General Public License version 2 as published by
+#  the Free Software Foundation.
+#
+#
+#  !Description: Bring network interfaces down
+#
+#===============================================================================
+
+set -e
+
+# loopback methods are directly handled by ifup
+[ "${METHOD}" = "loopback" ] && exit 0
+
+if [ ! -d "/sys/class/net/${IFACE}" ]; then
+	logger -t ifdown ${IFACE} not available
+	exit 0
+fi
+
+# ccwmx51js may have two ethernet interfaces, so we should verify
+# which driver is each 'ethX' to get the correct parameters.
+if [ "${DEL_PLATFORM}" = "ccwmx51js" -a "${IFACE%%[0-9]*}" = "eth" ]; then
+	driver="$(readlink -f -n /sys/class/net/${IFACE} | \
+			sed 's,/sys/devices/platform/\(.\{3\}\).*,\1,g')"
+fi
+
+case "${IFACE}:${driver}" in
+eth0: | *:fec)
+	dhcp="$(ubootenv -p dhcp | sed 's,^dhcp=,,g')"
+	;;
+eth1: | *:sms)
+	dhcp="$(ubootenv -p dhcp1 | sed 's,^dhcp1=,,g')"
+	;;
+wlan0:)
+	dhcp="$(ubootenv -p dhcp_wlan | sed 's,^dhcp_wlan=,,g')"
+	;;
+esac
+
+[ -z "${dhcp}" ] && exit 1
+
+if [ "${dhcp}" = "on" ]; then
+	pidfile="/var/run/udhcpc.${IFACE}.pid"
+	[ -e "${pidfile}" ] && start-stop-daemon -K -o -q -p ${pidfile} 2>/dev/null
+	rm -f ${pidfile}
+fi
+ifconfig ${IFACE} down
