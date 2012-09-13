@@ -1,0 +1,23 @@
+init.d
+ ->  S08gpio.sh		load the gpio kernel module and init the i2c gpio
+ ->  S08setdefault.sh   starts the /sbin/setdefault.sh script test factory reset
+                        Write the uboot variables relay* to /tmp/relay
+ ->  S08ureboot.sh      Start the ureboot demon /bin/ureboot
+ ->  S09setrelay        restore the relay states after power on
+ ->  S09cpbootenv       copy ubootenv variables to /tmp/uenv
+
+etc
+ -> network.conf	uboot default variable table factory values
+
+sbin
+ -> setdefault.sh	If factory-switch pressed then reset ubootenv network variables to factory values etc/network.conf
+
+src
+ -> cgi-bin		the cgi scripts are written with c
+	-> dodev.cgi	read data from post and set the output with system releasi2c and update the /tmp/relay file
+ 	-> option.cgi	read data from post test values and update uboot variables and signal ureboot demon to reboot
+        -> uenv.cgi     read /tmp/uenv uboot variables and send it with json format to the website
+ -> gpio		read the gpio pin to stdout
+ -> relayi2c		switch the plug over i2c io pins over the air
+ -> ureboot		reboot demon: if /tmp/reboot.txt exists reboot the system
+ -> urelay		relay demon: every 30 seconds, if file /tmp/relaynew exists, update ubootenv and /tmp/uenv with new values and remove /tmp/relaynew

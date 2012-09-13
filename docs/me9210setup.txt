@@ -1,0 +1,203 @@
+Setup ME9210 Digi module V1.0 H.Pichler 14.09.2011
+
+power on:
+
+-------------------------
+U-Boot 1.1.4 (Oct 31 2008 - 13:17:05) DUB-RevE
+for Digi Connect ME 9210 on Development Board
+
+DRAM:  8 MB
+Flash: 4 MB
+CPU:   NS9210 @ 74.95680 MHz, SYS 299.82720 MHz, AHB 74.95680 MHz, Rev 0
+Strap: 0x077f
+CME9210 #
+------------------------
+
+This is an old UBoot version. We must update later.
+
+1. Set the right ip and server ip address:
+
+setenv ipaddr 192.168.3.100
+setenv serverip 192.168.3.71
+saveenv
+
+2. Update Uboot
+
+update uboot
+
+---------------------------------
+TFTP from server 192.168.3.71; our IP address is 192.168.3.100
+Filename 'u-boot-cme9210js.bin'.
+Load address: 0x200000
+Loading: ##################################
+done
+Bytes transferred = 173056 (2a400 hex)
+Calculated checksum = 0x2144df1c
+Do you really want to overwrite U-Boot flash partition(y/n)         
+--------------------------------
+
+type y to continue
+
+reboot
+
+-------------------------------
+U-Boot 1.1.6 (Feb  2 2010 - 18:07:25 - GCC 4.3.2) DUB-RevF4
+for Digi Connect ME 9210 on Development Board
+
+DRAM:   8 MB
+Flash:  4 MB
+CPU:   NS9210 @ 74.95680 MHz, SYS 299.82720 MHz, AHB 74.95680 MHz, Rev 0
+Strap: 0x077f
+Autoscript from TFTP... [not available]
+CME9210 #                                         
+-------------------------------
+
+After update UBoot it is saver to restore the to default falues.
+
+envreset
+
+-------------------------------------
+Environment will be set to Default now!
+Writing Parameters to NVRAM
+CME9210 #        
+--------------------------------------
+
+reboot
+
+3. Set partition table
+
+flpart
+
+-------------------------------------------------------------
+Nr | Name   |  Start     | Size       | Type   | FS   | Flags
+-------------------------------------------------------------
+ 0 | U-Boot |          0 |    192 KiB | U-Boot |      | fixed
+ 1 | NVRAM  |    192 KiB |    128 KiB | NVRAM  |      | fixed
+-------------------------------------------------------------
+r
+l
+-------------------------------------------------------------
+Partition table reset
+Nr | Name   |  Start     | Size       | Type         | FS       | Flags
+-----------------------------------------------------------------------
+ 0 | U-Boot |          0 |    192 KiB | U-Boot       |          | fixed
+ 1 | NVRAM  |    192 KiB |    128 KiB | NVRAM        |          | fixed
+ 2 | Kernel |    320 KiB |   1280 KiB | Linux-Kernel |          |
+ 3 | RootFS |   1600 KiB |   1536 KiB | Filesystem   | SQUASHFS | rootfs
+ 4 | UserFS |   3136 KiB |    960 KiB | Filesystem   | JFFS2    |
+-----------------------------------------------------------------
+
+Delete partition 4,3:
+
+d
+4
+d
+3
+
+-------------------------------------------------------------------
+Nr | Name   |  Start     | Size       | Type         | FS   | Flags
+-------------------------------------------------------------------
+ 0 | U-Boot |          0 |    192 KiB | U-Boot       |      | fixed
+ 1 | NVRAM  |    192 KiB |    128 KiB | NVRAM        |      | fixed
+ 2 | Kernel |    320 KiB |   1280 KiB | Linux-Kernel |      |
+--------------------------------------------------------------------
+
+Add a RiitFS jffs2 partition:
+
+a
+RootFS
+0
+0
+0
+f
+n
+n
+j
+y
+n
+
+In detail:
+Cmd (? for help)> a
+Adding partition # 3
+  Name  (): Rootfs
+  Chip  (0): 0
+  Start (in MiB, 0 for auto) (0): 0
+   --> Set to 1600 KiB
+  Size  (in MiB, 0 for auto, 2496 KiB max) (0): 0
+   --> Set to 2496 KiB
+  Partition Types
+
+Partition Type (U-Boot, ? for help)> f
+  Fixed  (n): n
+  Readonly  (n): n
+  Filesystem Types
+
+Filesystem (, ? for help)> j
+  Root-FS  (n): y
+  Mount Readonly  (n): n
+Partition 3 added
+
+-----------------------------------------------------------------------
+Nr | Name   |  Start     | Size       | Type         | FS    | Flags
+--------------------------------------------------------------------
+ 0 | U-Boot |          0 |    192 KiB | U-Boot       |       | fixed
+ 1 | NVRAM  |    192 KiB |    128 KiB | NVRAM        |       | fixed
+ 2 | Kernel |    320 KiB |   1280 KiB | Linux-Kernel |       |
+ 3 | Rootfs |   1600 KiB |   2496 KiB | Filesystem   | JFFS2 | rootfs
+--------------------------------------------------------------------
+
+Cmd (? for help)> q
+Partition table has been modified. Save? (y): y
+Writing Parameters to NVRAM
+
+4. Write linux kernel and rootfs to flash
+
+update linux
+update rootfs
+
+5. check the mac address
+
+CME9210 # intnvram print module ethaddr1
+ethaddr1=00:40:9D:3F:20:39
+CME9210 #
+
+intnvram set module ethaddr1=00:FF:FF:3F:FF:FF
+
+Is the mac address correct ?
+
+yes --> goto 6
+
+no:
+
+change the mac address
+
+intnvram set module ethaddr1=00:40:9D:3F:20:39
+
+6. Restart and factory reset
+
+dboot linux flash
+
+hold the F button at boot sequence
+
+------snip----------
+testing set default... set default! network config
+Writing Parameters to NVRAM
+done
+...
+Initializing random number generator... done
+Starting network.
+  Registering DNS Servers: 172.16.0.2 172.16.0.3.
+Starting dropbear sshd: OK
+Starting ntpd: OK
+Starting httpd webserver: OK
+start slip .. panid 0xCAAC
+ZWIR4512 UART Gateway Deamon
+Interface zmd0 is up and ready....
+
+done
+
+BusyBox v1.15.2 (2011-05-24 16:33:03 CEST) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+/ #
+------snip-------------

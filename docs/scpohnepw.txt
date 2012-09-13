@@ -1,0 +1,45 @@
+#------Digi-ME9210------------
+Digi Support:
+
+When you boot the target and connect from the serial console the user is root, but the HOME environment variable is not set, so first of all we set the variable:
+
+On the target (minicom):
+# export HOME=/root
+# cd /root
+# mkdir .ssh
+# cd .ssh
+
+Create the public and private keys for user root in the target:
+# dropbearkey -t rsa -f dbkey
+# dropbearkey -f dbkey -y | head -n2 | tail -n1 > dbkey.pub
+# ls
+dbkey dbkey.pub
+
+Transfer root's public key to the host. In the example i want to connect to user jviguera in the host, so i transfer the public key to the jviguera home directory. This first time the password is asked, so you have to enter it:
+# scp key.pub jviguera@192.168.105.101:/home/jviguera
+
+Host '192.168.105.101' is not in the trusted hosts file.
+(fingerprint sha1
+b2:5f:6f:9c:45:7d:36:83:34:58:a6:10:05:78:7d:57:23:1e:9a:1b)
+Do you want to continue connecting? (y/n) y
+jviguera@192.168.105.101's password:
+key.pub 100% 228 0.2KB/s
+00:00
+
+In the target, the known_hosts file is created, due to the connection with the host:
+# ls
+key key.pub known_hosts
+
+In the host, you have to concatenate the received public key to your chain of public keys (file .ssh/authorized_keys)
+$ cd /home/jviguera
+$ cat key.pub >> .ssh/authorized_keys
+
+From now on you can use scp from the target to the host without password (but the option -i is required, root's private key)
+dbclient -i .ssh/dbkey  jviguera@192.168.105.101
+
+
+#-------sheevaplug------------
+ssh-keygen
+cp .ssh/id_rsa /etc/dropbear/
+# go to the server and add the key
+cat id_rsa.pub >> .ssh/authorized_key

@@ -1,0 +1,89 @@
+Work in progress !!!
+over nfs (ok):
+==============
+
+mount -t nfs -o nolock 192.168.3.71:/exports/images /tmp/mnt
+update_flash -R /tmp/mnt/rootfs-cme9210js.cramfs 3
+
+
+over scp (ok):
+==============
+
+serverseitg:
+user rudolf anlegen
+
+# adduser rudolf
+
+# cd /home/rudolf
+# mkdir .ssh
+# cat dbkey.pub >> .ssh/authorized_keys
+
+
+clientseitig:
+
+# export HOME=/root
+# cd /root
+# mkdir .ssh
+# cd .ssh
+
+Create the public and private keys for user root in the target:
+# dropbearkey -t rsa -f dbkey
+# dropbearkey -f dbkey -y | head -n2 | tail -n1 > dbkey.pub
+# ls
+dbkey dbkey.pub
+
+# scp dbkey.pub rudolf@192.168.03.11:/home/rudolf
+
+
+over second partition:
+=======================
+
+setenv bootsys 'intnvram set partition select=3 flag_fs_root=1;intnvram set partition select=4 flag_fs_root=0;dboot linux flash'
+setenv bootupdate 'intnvram set partition select=3 flag_fs_root=0;intnvram set partition select=4 flag_fs_root=1;dboot linux flash'
+setenv bootcmd 'run bootsys'
+saveenv
+
+
+
+
+ppp over ssh (unzip error):
+==================
+
+serverseitg:
+apt-get install ppp
+mknod /dev/ppp c 108 0
+
+clientseitig:
+
+/usr/sbin/pppd updetach noauth silent nodeflate pty "/usr/bin/dbclient root@192.168.3.71 /usr/sbin/pppd nodetach notty noauth" ipparam vpn 10.0.0.1:10.0.0.254
+mount -t nfs -o ro,noatime,vers=2,rsize=4096,wsize=4096,namlen=255,hard,nointr,nolock,proto=udp,timeo=11,retrans=3 10.0.0.254:/exports/images /tmp/mnt
+update_flash -R /tmp/mnt/rootfs-cme9210js.cramfs 3
+
+
+over ssh nfs tunnel (rpc error ?):
+====================
+
+dbclient -f -N -L "3049:192.168.3.71:2049" 192.168.3.71
+mount -t nfs -o nolock,tcp,port=3049 192.168.3.71:/exports/images /tmp/mnt
+------------------------------------------------------------
+ssh -fN -L "3049:192.168.3.71:2049" 192.168.3.71
+mount -t nfs -o nolock,port=3049 192.168.3.71:/exports/images /tmp/mnt
+
+mount -t nfs -o rw,noatime,vers=2,rsize=4096,wsize=4096,namlen=255,hard,nointr,nolock,proto=udp,timeo=11,retrans=3,port=3049 192.168.3.71:/exports/images /tmp/mnt
+
+andere Anleitung:
+ssh 192.168.3.71 -L 2222:localhost:2049 -f sleep 600m
+ssh 192.168.3.71 -L 3333:localhost:2233 -f sleep 600m
+
+mount -v -t nfs -o port=2222,mountport=3333 localhost:/exports/images /mnt
+
+-------------------------------------------------------------
+dbclient 192.168.3.71 -L 2222:192.168.3.71:2049 -f sleep 600m
+dbclient 192.168.3.71 -L 3333:192.168.3.71:3333 -f sleep 600m
+
+mount -v -t nfs -o port=2222,mountport=3333 192.168.3.71:/exports/images /mnt
+
+mount -t nfs -o rw,noatime,vers=2,rsize=4096,wsize=4096,namlen=255,hard,nointr,nolock,proto=udp,timeo=11,retrans=3,port=2222,mountport=3333 192.168.3.71:/exports/images /tmp/mnt
+
+/dev/root on / type nfs (rw,noatime,vers=2,rsize=4096,wsize=4096,namlen=255,hard,nointr,nolock,proto=udp,timeo=11,retrans=3,sec=sys,addr=192.168.3.7)
+

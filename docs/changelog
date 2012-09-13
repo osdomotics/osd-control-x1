@@ -1,0 +1,76 @@
+todo:
+change relay interface to nonopt arguments
+switch relay with coap-server
+Umlaute bei Bezeichnung
+at command ?
+Webinterface Timer, one-shoot
+ME9210 suspend to ram managment
+
+V1.0pre10
+change to DigiEL5.7		< H.P.>
+
+V1.0pre9
+remove uenvtmp.cgi                           < H.P.>
+add S09cpbootenv.sh                          < H.P.>
+Webinterface restart window.setInterval      < H.P.>
+uenv.cgi reload from ramdisk                 < H.P.>
+add mobile2 page with Buttons                < H.P.> 
+add timezone file TZ -> CET-1                < H.P.>
+add S08cron.sh  start crond                  < H.P.>
+
+V1.0pre8
+change version webinterface to V1.0pre8         < H.P.>
+update /mobile site jQuery-Mobile 1.0           < H.P.>
+move jquery code to *.js files	                < H.P.>
+change mobile document.ready to live 'pageinit' < H.P.>
+
+V1.0pre7
+change version webinterface to V1.0pre7    < H.P.>
+update /mobile site jQuery-Mobile 1.rc3    < H.P.>
+add me9210setup.txt                        < H.P.> 
+
+V1.0pre6
+change version webinterface to V1.0pre6 < H.P.>
+update to jquery-1.6.4.min.js           < H.P.>
+bugfix device.html jQuery-1.6.4 prop    < H.P.>
+add /mobile site jQuery-Mobile 1.rc2    < H.P.> 
+
+V1.0pre5
+change default device name              < H.P.>
+config kernel ipv6                      < H.P.> 
+config busybox ipv6                     < H.P.>
+add ping6                               < H.P.>
+change version webinterface to V1.0pre5 < H.P.>
+bugfix json format                      < H.P.>
+
+V1.0pre4
+change relaisis2c-test to relayi2c        < H.P.>
+change version webinterface to V1.0pre4	  < H.P.>
+update to jquery-1.5.1.min.js             < H.P.>
+
+
+V1.0pre3
+add 8 devices to websites       < H.P.>
+add devicename to network.conf  < H.P.>
+add 8 devices to network.conf   < H.P.>
+change kernel to jffs2          < H.P.>
+
+V1.0pre2
+add Openntpd network time protocol < H.P.>
+add Strace system call tracer      < H.P.>
+optimized kernel                   < H.P.>
+updatescp.sh                       < H.P.>
+
+V1.0pre1
+add version number webgen source < H.P.>
+add copyright sourc files        < H.P.>
+updatesafe.sh script (login ssh and update the rootfs, get target from serverip) < H.P.>
+add userfs image to safe update  < H.P.> 
+
+V1.0pre0
+
+first version to peter < H.P.>
+jquery-1.4.3.min.js
+
+todo:
+firmware update nfs via ssh
