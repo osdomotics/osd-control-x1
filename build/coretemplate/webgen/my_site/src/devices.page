@@ -8,7 +8,7 @@ h2. Device list
 Here you can switch the plug
 
 
-
+<notextile>
 <FORM name="Testform" METHOD=post ACTION="">
 <BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld1" value="A"> <b id="tfeld1"></b>
 <BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld2" value="B"> <b id="tfeld2"></b>
@@ -20,6 +20,6 @@ Here you can switch the plug
 <BR>  <INPUT class="target" TYPE="checkbox" NAME="Feld8" value="H"> <b id="tfeld8"></b>
 <BR><BR>
 </FORM>
-
+</notextile>
 
 <p id="info">&nbsp;</p>

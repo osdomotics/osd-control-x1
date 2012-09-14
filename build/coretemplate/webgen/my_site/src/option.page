@@ -9,6 +9,7 @@ h2. Network
 
 Here is the place where you can configure the network.
 
+<notextile>
 <FORM name="networkform" METHOD=post ACTION="">
 HOSTNAME:<BR><INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
 IP:<BR><INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
@@ -22,11 +23,13 @@ ServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
 <BUTTON> OK </BUTTON>
 <BUTTON> RESET </BUTTON>
 <BR>
+</notextile>
 
 h2. Devices
 
 Here is the place where you can configure the devices.
 
+<notextile>
 <FORM name="deviceform" METHOD=post ACTION="">
 A0:<INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
 B0:<INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
@@ -39,5 +42,6 @@ D1:<INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
 </FORM>
 <BUTTON> OK </BUTTON>
 <BUTTON> RESET </BUTTON>
+</notextile>
 
 <div id="ausgabe"></div>

@@ -9,7 +9,7 @@ h2. Netzwerk
 
 Hier werden die Netzwerk Parameter eingestellt.
 
-
+<notextile>
 <FORM name="networkform" METHOD=post ACTION="">
 HOSTNAME:<BR><INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
 IP:<BR><INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
@@ -23,12 +23,13 @@ ServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
 <BUTTON> OK </BUTTON>
 <BUTTON> RESET </BUTTON>
 <BR>
+</notextile>
 
 h2. Geräte
 
 Hier werden die Geräte Parameter eingestellt.
 
-
+<notextile>
 <FORM name="deviceform" METHOD=post ACTION="">
 A0:<INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
 B0:<INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
@@ -41,5 +42,5 @@ D1:<INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
 </FORM>
 <BUTTON> OK </BUTTON>
 <BUTTON> RESET </BUTTON>
-
+</notextile>
 <div id="ausgabe"></div>
