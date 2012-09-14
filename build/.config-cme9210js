@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.14
-# Tue Sep 11 13:43:39 2012
+# Fri Sep 14 08:40:51 2012
 #
 CONFIG_DEL_CME9210JS=y
 
@@ -747,7 +747,7 @@ CONFIG_I2C_NS9XXX=y
 # CONFIG_PPS is not set
 CONFIG_ARCH_REQUIRE_GPIOLIB=y
 CONFIG_GPIOLIB=y
-CONFIG_GPIO_SYSFS=y
+# CONFIG_GPIO_SYSFS is not set
 
 #
 # Memory mapped GPIO expanders:

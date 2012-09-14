@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.14
-# Tue Sep 11 13:43:07 2012
+# Thu Sep 13 14:18:13 2012
 #
 CONFIG_DEL_CME9210JS=y
 
@@ -824,7 +824,9 @@ CONFIG_RTC_LIB=y
 # CONFIG_RTC_CLASS is not set
 # CONFIG_DMADEVICES is not set
 # CONFIG_AUXDISPLAY is not set
-# CONFIG_UIO is not set
+CONFIG_UIO=y
+CONFIG_UIO_PDRV=y
+# CONFIG_UIO_PDRV_GENIRQ is not set
 CONFIG_FIM_CORE=y
 # CONFIG_FIM_APPKIT_BOARD is not set
 CONFIG_FIM_ZERO=y
@@ -1177,7 +1179,6 @@ CONFIG_IMAGE_JFFS2_COMPRESSION_PRIO=y
 CONFIG_IMAGE_JFFS2_COMPRESSION="priority"
 # CONFIG_IMAGE_CRAMFS is not set
 # CONFIG_IMAGE_ROMFS is not set
-CONFIG_IMAGE_SQUASHFS=y
-CONFIG_IMAGE_SQUASHFS_NAME="rootfs-cme9210js.squashfs"
+# CONFIG_IMAGE_SQUASHFS is not set
 # CONFIG_IMAGE_INITRD is not set
 # CONFIG_IMAGE_INITRAMFS is not set
