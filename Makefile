@@ -9,9 +9,10 @@ export DEL_PLATFORM=cme9210js
 export DEL_TFTP_DIR=/tftpboot
 export DEL_NFS_DIR=
 
-SUBPRJ_LIST:=kernel rootfs
+SUBPRJ_LIST:=kernel rootfs apps
 ################################################################################
 
 include rules/makefile.in
 include rules/kernel.in
 include rules/rootfs.in
+include rules/apps.in
