@@ -1,6 +1,16 @@
 # Device nodes for cme9210js
-
-# led3-cr21 and button2 (needed by gpio_test application)
-/dev/gpio     d    755    0    0
-/dev/gpio/2   c    644    0    0    240   2
-/dev/gpio/9   c    644    0    0    240   9
+/dev/gpio    d    755    0    0
+/dev/gpio/0  c    644    0    0    240   0
+/dev/gpio/1  c    644    0    0    240   1
+/dev/gpio/2  c    644    0    0    240   2
+# RxD /dev/gpio/3  c    644    0    0    240   3
+# NC  /dev/gpio/4  c    644    0    0    240   4
+/dev/gpio/5  c    664    0    0    240   5
+/dev/gpio/6  c    644    0    0    240   6
+# TxD /dev/gpio/7  c    644    0    0    240   7
+# NC /dev/gpio/8  c    644    0    0    240   8
+# i2c SCL   /dev/gpio/9  c    644    0    0    240   9
+# NC /dev/gpio/10 c    644    0    0    240   10
+# NC /dev/gpio/11 c    644    0    0    240   11
+# i2c SDA /dev/gpio/12 c    644    0    0    240   12
+/dev/gpio/13 c    644    0    0    240   13

@@ -69,7 +69,8 @@ if ! "${kernfs_bool}"; then [ -z "${quietboot}" ] && echo "."; fi
 
 # tmpfs
 memtotal="$(sed -ne 's/^MemTotal\: \+\([^ ]\+\) kB/\1/g;T;p' /proc/meminfo)"
-[ -n "${memtotal}" ] && tmpsize="-o size=$(( (${memtotal} + 4096) / 8192 ))m"
+##[ -n "${memtotal}" ] && tmpsize="-o size=$(( (${memtotal} + 4096) / 8192 ))m"
+tmpsize="-o size=500K"
 tmpfs_bool="true"
 tmpfs_banner="Mounting tmp file systems (tmpfs):"
 for path in "/tmp"; do
@@ -86,9 +87,6 @@ done
 if ! "${tmpfs_bool}"; then [ -z "${quietboot}" ] && echo "."; fi
 
 # Remount rootfs with noatime option
-mount -o remount,noatime /
-
-# Configure kernel parameters
-[ -f /etc/sysctl.conf ] && sysctl -p >/dev/null
+mount -o remount,noatime /dev/root
 
 exit 0

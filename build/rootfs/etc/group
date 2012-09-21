@@ -2,3 +2,5 @@ root:*:0:
 www-data:*:33:
 users:*:100:
 nogroup:*:65534:
+_ntp:x:501:
+ftp:x:50:
