@@ -40,7 +40,7 @@ $(BINARY): $(OBJS)
 install: $(BINARY)
 ifneq ($(ROOTFS_DIR),)
 	$(STRIP) $<
-	install -D -m 0755 $< $(ROOTFS_DIR)/usr/bin/$<
+	install -D -m 0755 $< $(ROOTFS_DIR)/bin/$<
 else
 	@printf "\n"
 	@printf "[ WARNING ] $<: installation directory not found, application not installed\n"
