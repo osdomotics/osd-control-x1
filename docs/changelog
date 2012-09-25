@@ -7,7 +7,10 @@ Webinterface Timer, one-shoot
 ME9210 suspend to ram managment
 
 V1.0pre10
-change to DigiEL5.7		< H.P.>
+add apps folder                          < H.P.>
+bugfix new webgen version                < H.P.>
+change webinterface to V1.0pre10         < H.P.>
+change to DigiEL5.7		         < H.P.>
 
 V1.0pre9
 remove uenvtmp.cgi                           < H.P.>
