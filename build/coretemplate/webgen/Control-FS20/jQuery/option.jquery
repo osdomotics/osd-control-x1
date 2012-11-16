@@ -1,0 +1,111 @@
+	<script type="text/javascript">
+	$('document').ready(function() 
+	{ 
+		//Assign default value to form field #1
+		getenv();
+
+	        $("button:first").click(function(){
+	          $.post('/cgi-bin/option.cgi',  
+	            { 
+                	ipaddr: document.networkform.Feld1.value,
+                	gatewayip: document.networkform.Feld2.value,
+                	netmask: document.networkform.Feld3.value,
+                	dhcp: document.networkform.Feld4.checked,
+                	dnsip: document.networkform.Feld5.value,
+                	dnsip2: document.networkform.Feld6.value,
+                	serverip: document.networkform.Feld7.value,
+                	hostname: document.networkform.Feld8.value,
+	            }, 
+	            function(data){
+	             //$("#ausgabe").html(data);
+			alert("I am rebooting ...");
+	            });
+	        });
+        	$("button:eq(1)").click(function(){
+			getenv();
+	        });
+	        $("button:eq(2)").click(function(){
+	          $.post('/cgi-bin/device.cgi',  
+	            { 
+                	relname1: document.deviceform.Feld1.value,
+                	relname2: document.deviceform.Feld2.value,
+                	relname3: document.deviceform.Feld3.value,
+                	relname4: document.deviceform.Feld4.value,
+                	relname5: document.deviceform.Feld5.value,
+                	relname6: document.deviceform.Feld6.value,
+                	relname7: document.deviceform.Feld7.value,
+                	relname8: document.deviceform.Feld8.value,
+
+                	on1: document.deviceform.FeldOn1.value,
+                	on2: document.deviceform.FeldOn2.value,
+                	on3: document.deviceform.FeldOn3.value,
+                	on4: document.deviceform.FeldOn4.value,
+                	on5: document.deviceform.FeldOn5.value,
+                	on6: document.deviceform.FeldOn6.value,
+                	on7: document.deviceform.FeldOn7.value,
+                	on8: document.deviceform.FeldOn8.value,
+
+                	off1: document.deviceform.FeldOff1.value,
+                	off2: document.deviceform.FeldOff2.value,
+                	off3: document.deviceform.FeldOff3.value,
+                	off4: document.deviceform.FeldOff4.value,
+                	off5: document.deviceform.FeldOff5.value,
+                	off6: document.deviceform.FeldOff6.value,
+                	off7: document.deviceform.FeldOff7.value,
+                	off8: document.deviceform.FeldOff8.value,
+
+	            }, 
+	            function(data){
+	             //$("#ausgabe").html(data);
+	            });
+	        });
+
+        	$("button:last").click(function(){
+			getenv();
+	        });
+		function getenv(){
+			//Assign default value to form field #1
+                	$.getJSON('/cgi-bin/uenv.cgi',
+				function(data){
+                		document.networkform.Feld8.value = data.hostname ;
+                		document.networkform.Feld1.value = data.ipaddr ;
+                		document.networkform.Feld2.value = data.gatewayip ;
+                		document.networkform.Feld3.value = data.netmask ;
+                		document.networkform.Feld4.checked = (data.dhcp == 'on') ;
+                		document.networkform.Feld5.value = data.dnsip ;
+                		document.networkform.Feld6.value = data.dnsip2 ;
+                		document.networkform.Feld7.value = data.serverip ;
+
+                		document.deviceform.Feld1.value = data.relname1 ;
+                		document.deviceform.Feld2.value = data.relname2 ;
+                		document.deviceform.Feld3.value = data.relname3 ;
+                		document.deviceform.Feld4.value = data.relname4 ;
+				document.deviceform.Feld5.value = data.relname5 ;
+                		document.deviceform.Feld6.value = data.relname6 ;
+                		document.deviceform.Feld7.value = data.relname7 ;
+                		document.deviceform.Feld8.value = data.relname8 ;
+
+                		document.deviceform.FeldOn1.value = data.on1 ;
+                		document.deviceform.FeldOn2.value = data.on2 ;
+                		document.deviceform.FeldOn3.value = data.on3 ;
+                		document.deviceform.FeldOn4.value = data.on4 ;
+				document.deviceform.FeldOn5.value = data.on5 ;
+                		document.deviceform.FeldOn6.value = data.on6 ;
+                		document.deviceform.FeldOn7.value = data.on7 ;
+                		document.deviceform.FeldOn8.value = data.on8 ;
+
+                		document.deviceform.FeldOff1.value = data.off1 ;
+                		document.deviceform.FeldOff2.value = data.off2 ;
+                		document.deviceform.FeldOff3.value = data.off3 ;
+                		document.deviceform.FeldOff4.value = data.off4 ;
+				document.deviceform.FeldOff5.value = data.off5 ;
+                		document.deviceform.FeldOff6.value = data.off6 ;
+                		document.deviceform.FeldOff7.value = data.off7 ;
+                		document.deviceform.FeldOff8.value = data.off8 ;
+	            }, 
+	            function(data){
+	             //$("#ausgabe").html(data);
+	            });
+		};
+	});
+	</script>

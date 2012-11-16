@@ -1,0 +1,46 @@
+---
+title: Einstellungen
+inMenu: true
+orderInfo: 20
+---
+
+
+h2. Netzwerk
+
+Hier werden die Netzwerk Parameter eingestellt.
+
+<H5>IPv4</H5>
+<FORM name="networkform" METHOD=post ACTION="">
+HOSTNAME:<BR><INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
+IPv4:<BR><INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
+GW:<BR><INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
+<span class="caps">MASK</span>:<BR><INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
+<BR><INPUT TYPE="checkbox" NAME="Feld4" value="DHCP"> DHCP <BR><BR>
+DNS1:<BR><INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
+DNS2:<BR><INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
+ServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
+<H5>IPv4</H5>
+IPv6-Präfix:<BR><INPUT NAME="Feld9" SIZE=20 MAXLENGHT=30><BR>
+6LoWPAN-Präfix:<BR><INPUT NAME="Feld10" SIZE=20 MAXLENGHT=30><BR>
+PANID:<BR><INPUT NAME="Feld11" SIZE=20 MAXLENGHT=30><BR>
+<BR><INPUT TYPE="checkbox" NAME="Feld12" value="Router"> ROUTER <BR><BR>
+</FORM>
+<BUTTON> OK </BUTTON>
+<BUTTON> RESET </BUTTON>
+<BR>
+
+h2. Geräte
+
+Hier werden die Geräte Parameter eingestellt.
+
+
+<FORM name="deviceform" METHOD=post ACTION="">
+A:<INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
+B:<INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
+C:<INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
+D:<INPUT NAME="Feld4" SIZE=20 MAXLENGHT=30><BR>
+</FORM>
+<BUTTON> OK </BUTTON>
+<BUTTON> RESET </BUTTON>
+
+<div id="ausgabe"></div>
