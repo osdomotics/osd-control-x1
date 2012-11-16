@@ -11,6 +11,11 @@ export DEL_NFS_DIR=
 
 SUBPRJ_LIST:=kernel rootfs apps
 ################################################################################
+# Control-X1 --> plug-control
+# Control-X2 --> 6lowpan edge-router
+# Control-FS20 --> fs20-control 
+################################################################################
+export OSD_TARGET=Control-X1
 
 include rules/makefile.in
 include rules/kernel.in
