@@ -32,16 +32,16 @@ ROOTFS_DIR="${DEL_PROJ_DIR}/build/rootfs"
 
 ## Example: create a custom directory in rootfs etc dir.
 # mkdir -p "${ROOTFS_DIR}/etc/myfolder"
-#cp  "${DEL_PROJ_DIR}/build/coretemplate/src/relayi2c/relayi2c"  "${ROOTFS_DIR}/bin/relayi2c"
-#cp  "${DEL_PROJ_DIR}/build/coretemplate/src/ureboot/ureboot"  "${ROOTFS_DIR}/bin/ureboot"
-#cp  "${DEL_PROJ_DIR}/build/coretemplate/src/urelay/urelay"  "${ROOTFS_DIR}/bin/urelay"
-#cp  "${DEL_PROJ_DIR}/build/coretemplate/src/gpio/gpio"  "${ROOTFS_DIR}/bin/gpio"
-#chmod +s "${ROOTFS_DIR}/bin/relayi2c"
-#chmod +s "${ROOTFS_DIR}/bin/ureboot"
+
 chmod +s "${ROOTFS_DIR}/sbin/ubootenv"
 rmdir --ignore-fail-on-non-empty "${ROOTFS_DIR}/usr/share/www"
 cp -a "${DEL_PROJ_DIR}/build/coretemplate/www"  "${ROOTFS_DIR}/usr/share"
-## entryeasy
+## Control-X1
 cp -a "${DEL_PROJ_DIR}/build/coretemplate/etc"  "${ROOTFS_DIR}/"
 cp -a "${DEL_PROJ_DIR}/build/coretemplate/sbin"  "${ROOTFS_DIR}/"
+## FS20
+#ifdef CONFIG_FS20
+cp -a "${DEL_PROJ_DIR}/build/coretemplate/etc-fs20/."  "${ROOTFS_DIR}/etc"
+cp -a "${DEL_PROJ_DIR}/build/coretemplate/sbin-fs20/."  "${ROOTFS_DIR}/sbin"
+#endif
 exit 0

@@ -16,8 +16,13 @@ SUBPRJ_LIST:=kernel rootfs apps
 # Control-FS20 --> fs20-control 
 ################################################################################
 export OSD_TARGET=Control-X1
+//export CONFIG_FS20=y
+//export CONFIG_X2=y
 
 include rules/makefile.in
 include rules/kernel.in
 include rules/apps.in
+ifdef CONFIG_FS20
+  include rules/apps-fs20.in
+endif
 include rules/rootfs.in
