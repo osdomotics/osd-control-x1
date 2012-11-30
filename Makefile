@@ -19,5 +19,5 @@ export OSD_TARGET=Control-X1
 
 include rules/makefile.in
 include rules/kernel.in
-include rules/rootfs.in
 include rules/apps.in
+include rules/rootfs.in

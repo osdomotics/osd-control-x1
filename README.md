@@ -7,8 +7,6 @@ git clone https://github.com/osdomotics/osd-control-x1.git
 cd osd-control-x1
 //edit user path of make file
 make rebuild
-make install_apps
-make
 make install
 ----------------------
 Project website:
