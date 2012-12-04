@@ -24,7 +24,7 @@ ROOTFS_DIR = $(strip $(wildcard $(DEL_PROJ_DIR)/build/rootfs))
 STRIP      = $(CROSS_COMPILE)strip
 CC         = $(CROSS_COMPILE)gcc
 CFLAGS     = -Wall
-BINARY     = relayi2c
+BINARY     = sendfs20
 
 #-include $(DEL_PROJ_DIR)/build/.config-$(DEL_PLATFORM)
 

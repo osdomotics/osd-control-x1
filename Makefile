@@ -9,20 +9,20 @@ export DEL_PLATFORM=cme9210js
 export DEL_TFTP_DIR=/tftpboot
 export DEL_NFS_DIR=
 
-SUBPRJ_LIST:=kernel rootfs apps
+SUBPRJ_LIST:=kernel rootfs apps fs20
 ################################################################################
 # Control-X1 --> plug-control
 # Control-X2 --> 6lowpan edge-router
 # Control-FS20 --> fs20-control 
 ################################################################################
 export OSD_TARGET=Control-X1
-//export CONFIG_FS20=y
+export CONFIG_FS20=y
 //export CONFIG_X2=y
 
 include rules/makefile.in
 include rules/kernel.in
 include rules/apps.in
 ifdef CONFIG_FS20
-  include rules/apps-fs20.in
+  include rules/fs20.in
 endif
 include rules/rootfs.in

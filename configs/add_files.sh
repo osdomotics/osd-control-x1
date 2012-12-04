@@ -32,18 +32,17 @@ ROOTFS_DIR="${DEL_PROJ_DIR}/build/rootfs"
 
 ## Example: create a custom directory in rootfs etc dir.
 # mkdir -p "${ROOTFS_DIR}/etc/myfolder"
-
-chmod +s "${ROOTFS_DIR}/sbin/ubootenv"
 rmdir --ignore-fail-on-non-empty "${ROOTFS_DIR}/usr/share/www"
 cp -a "${DEL_PROJ_DIR}/build/coretemplate/www"  "${ROOTFS_DIR}/usr/share"
 ## Control-X1
 cp -a "${DEL_PROJ_DIR}/build/coretemplate/etc"  "${ROOTFS_DIR}/"
 cp -a "${DEL_PROJ_DIR}/build/coretemplate/sbin"  "${ROOTFS_DIR}/"
+chmod +s "${ROOTFS_DIR}/sbin/ubootenv"
 ## FS20
 #ifdef CONFIG_FS20
 if [  ${CONFIG_FS20} ]
   then
-    echo "FS20"
+    echo "add files FS20"
     cp -a "${DEL_PROJ_DIR}/build/coretemplate/etc-fs20/."  "${ROOTFS_DIR}/etc"
     cp -a "${DEL_PROJ_DIR}/build/coretemplate/sbin-fs20/."  "${ROOTFS_DIR}/sbin"
     webgen -d "${DEL_PROJ_DIR}/build/coretemplate/webgen/Control-FS20/" run
