@@ -19,3 +19,4 @@ install_apps:
 
 apps_clean:
 	$(Q) $(foreach app, $(dir $(DEL_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-" clean;)
+	@printf "\n--- Clean apps finished ---\n\n"
