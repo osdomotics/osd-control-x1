@@ -11,7 +11,7 @@ build_fs20:
 	$(Q) $(foreach app, $(dir $(FS20_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-";)
 	@printf "\n--- Make apps FS20 finished ---\n\n"
 
-rebuild_fs20: fs20_clean build_fs20
+rebuild_fs20: fs20_clean build_fs20 install_fs20
 
 install_fs20:
 	$(Q) $(foreach app, $(dir $(FS20_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-" install;)

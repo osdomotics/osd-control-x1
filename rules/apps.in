@@ -11,7 +11,7 @@ build_apps:
 	$(Q) $(foreach app, $(dir $(DEL_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-";)
 	@printf "\n--- Make apps finished ---\n\n"
 
-rebuild_apps: apps_clean build_apps
+rebuild_apps: apps_clean build_apps install_apps
 
 install_apps:
 	$(Q) $(foreach app, $(dir $(DEL_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-" install;)
