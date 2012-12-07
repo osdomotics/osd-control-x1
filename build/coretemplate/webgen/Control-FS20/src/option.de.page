@@ -1,0 +1,81 @@
+---
+title: Einstellungen
+inMenu: true
+orderInfo: 20
+---
+
+
+h2. Netzwerk
+
+Hier werden die Netzwerk Parameter eingestellt.
+
+<notextile>
+<FORM name="networkform" METHOD=post ACTION="">
+HOSTNAME:<BR><INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
+IP:<BR><INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
+GW:<BR><INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
+<span class="caps">MASK</span>:<BR><INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
+<BR><INPUT TYPE="checkbox" NAME="Feld4" value="DHCP"> DHCP <BR><BR>
+DNS1:<BR><INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
+DNS2:<BR><INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
+ServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
+</FORM>
+<BUTTON> OK </BUTTON>
+<BUTTON> RESET </BUTTON>
+<BR>
+</notextile>
+
+h2. Geräte
+
+Hier werden die Geräte Parameter eingestellt.
+
+<notextile>
+<FORM name="deviceform" METHOD=post ACTION="">
+<table border="1">
+  <colgroup width="200" span="3"></colgroup>
+  <tr>
+    <td>A0:<INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn1" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff1" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+  <tr>
+    <td>B0:<INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn2" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff2" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+  <tr>
+    <td>C0:<INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn3" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff3" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+  <tr>
+    <td>D0:<INPUT NAME="Feld4" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn4" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff4" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+  <tr>
+    <td>A1:<INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn5" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff5" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+  <tr>
+    <td>B1:<INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn6" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff6" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+  <tr>
+    <td>C1:<INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn7" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff7" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+  <tr>
+    <td>D1:<INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30></td>
+    <td>ON:<INPUT NAME="FeldOn8" SIZE=15 MAXLENGHT=30></td>
+    <td>OFF:<INPUT NAME="FeldOff8" SIZE=15 MAXLENGHT=30></td>
+  </tr>
+</table>
+</FORM>
+<BUTTON> OK </BUTTON>
+<BUTTON> RESET </BUTTON>
+</notextile>
+<div id="ausgabe"></div>
