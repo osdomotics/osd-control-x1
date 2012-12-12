@@ -22,7 +22,7 @@ echo
 
 #export CC="arm-linux-gcc"
 
-PATH=~/digi/digiel5.7/x-tools/arm-unknown-linux-uclibcgnueabi/bin/:$PATH
+PATH=~/Digi/DigiEL-5.7/x-tools/arm-unknown-linux-uclibcgnueabi/bin/:$PATH
 export PATH
 
 echo $CC

@@ -1,0 +1,39 @@
+diff --git a/proto/rip/rip.c b/proto/rip/rip.c
+index 543aa30..031162b 100644
+--- a/proto/rip/rip.c
++++ b/proto/rip/rip.c
+@@ -146,7 +146,11 @@ rip_tx( sock *s )
+     DBG( "Preparing packet to send: " );
+ 
+     packet->heading.command = RIPCMD_RESPONSE;
++#ifndef IPV6
+     packet->heading.version = RIP_V2;
++#else
++    packet->heading.version = RIP_NG;
++#endif
+     packet->heading.unused  = 0;
+ 
+     i = !!P_CF->authtype;
+@@ -977,7 +981,11 @@ rip_init_config(struct rip_proto_config *c)
+   init_list(&c->iface_list);
+   c->c.preference = DEF_PREF_RIP;
+   c->infinity	= 16;
++#ifndef IPV6
+   c->port	= 520;
++#else
++  c->port	= 521;
++#endif
+   c->period	= 30;
+   c->garbage_time = 120+180;
+   c->timeout_time = 120;
+diff --git a/proto/rip/rip.h b/proto/rip/rip.h
+index 5a6e36d..f27903a 100644
+--- a/proto/rip/rip.h
++++ b/proto/rip/rip.h
+@@ -39,6 +39,7 @@ struct rip_packet_heading {		/* 4 bytes */
+   u8 version;
+ #define RIP_V1 1
+ #define RIP_V2 2
++#define RIP_NG 			1	/* this is verion 1 of RIPng */
+   u16 unused;
+ };

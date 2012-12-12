@@ -7,8 +7,9 @@ orderInfo: 20
 
 h2. Network
 
-Here is the place where you can configure the Network.
+Configure the Network.
 
+<notextile>
 <H5>IPv4</H5>
 <FORM name="networkform" METHOD=post ACTION="">
 HOSTNAME:<BR><INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
@@ -18,7 +19,7 @@ GW:<BR><INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
 <BR><INPUT TYPE="checkbox" NAME="Feld4" value="DHCP"> DHCP <BR><BR>
 DNS1:<BR><INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
 DNS2:<BR><INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
-ServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
+UpdateServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
 <H5>IPv6</H5>
 IPv6-Prefix:<BR><INPUT NAME="Feld9" SIZE=20 MAXLENGHT=30><BR>
 6LoWPAN-Prefix:<BR><INPUT NAME="Feld10" SIZE=20 MAXLENGHT=30><BR>
@@ -28,18 +29,23 @@ PANID:<BR><INPUT NAME="Feld11" SIZE=20 MAXLENGHT=30><BR>
 <BUTTON> OK </BUTTON>
 <BUTTON> RESET </BUTTON>
 <BR>
-
+</notextile>
 h2. Devices
 
-Here is the place where you can configure the devices.
+Configure the devices.
 
+<notextile>
 <FORM name="deviceform" METHOD=post ACTION="">
 A:<INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
 B:<INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
 C:<INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
 D:<INPUT NAME="Feld4" SIZE=20 MAXLENGHT=30><BR>
+A1:<INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
+B1:<INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
+C1:<INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
+D1:<INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
 </FORM>
 <BUTTON> OK </BUTTON>
 <BUTTON> RESET </BUTTON>
-
+</notextile>
 <div id="ausgabe"></div>

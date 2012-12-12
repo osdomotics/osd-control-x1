@@ -1,0 +1,22 @@
+################################################################################
+##
+## Applications makefile
+##
+################################################################################
+.PHONY: build_x2 rebuild_x2
+
+FS20_APPS=$(strip $(wildcard $(DEL_PROJ_DIR)/build/coretemplate/apps-x2/*/Makefile))
+
+build_x2:
+	$(Q) $(foreach app, $(dir $(FS20_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-";)
+	@printf "\n--- Make apps X2 finished ---\n\n"
+
+rebuild_x2: x2_clean build_x2 install_x2
+
+install_x2:
+	$(Q) $(foreach app, $(dir $(FS20_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-" install;)
+	@printf "\n--- Install apps X2 finished ---\n\n"
+
+x2_clean:
+	$(Q) $(foreach app, $(dir $(FS20_APPS)), $(MAKE) -C $(app) "CROSS_COMPILE=arm-linux-" clean;)
+	@printf "\n--- Clean apps X2 finished ---\n\n"
