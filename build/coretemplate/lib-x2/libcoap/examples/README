@@ -1,0 +1,3 @@
+./coap-client -mput coap://[aaaa::ff:fe00:3]:61616/led1 -e 'mode=off'
+./coap-client -mput coap://[aaaa::ff:fe00:3]:61616/led1 -e 'mode=on'
+./coap-client -v8  coap://[aaaa::ff:fe00:3]:61616/led1
