@@ -59,42 +59,46 @@
           <a id="main"></a>
           <div id="content">
             <h2>Network</h2>
-<p>Here is the place where you can configure the Network.</p>
+<p>Configure the Network.</p>
 <H5>IPv4</H5>
-<p>&lt;<span class="caps">FORM</span> name=&#8220;networkform&#8221; <span class="caps">METHOD</span>=post <span class="caps">ACTION</span>=&quot;&quot;&gt;
-<span class="caps">HOSTNAME</span>:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld8&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-IPv4:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld1&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-GW:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld2&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-<span class="caps"><span class="caps">MASK</span></span>:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld3&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-<BR><INPUT TYPE="checkbox" NAME="Feld4" value="DHCP"> <span class="caps">DHCP</span> <BR><BR>
-DNS1:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld5&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-DNS2:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld6&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-ServerIP:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld7&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
+<FORM name="networkform" METHOD=post ACTION="">
+HOSTNAME:<BR><INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
+IPv4:<BR><INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
+GW:<BR><INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
+<span class="caps">MASK</span>:<BR><INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
+<BR><INPUT TYPE="checkbox" NAME="Feld4" value="DHCP"> DHCP <BR><BR>
+DNS1:<BR><INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
+DNS2:<BR><INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
+UpdateServerIP:<BR><INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
 <H5>IPv6</H5>
-IPv6-Prefix:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld9&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-6LoWPAN-Prefix:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld10&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-<span class="caps">PANID</span>:<BR>&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld11&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-<BR><INPUT TYPE="checkbox" NAME="Feld12" value="Router"> <span class="caps">ROUTER</span> <BR><BR></p>
+IPv6-Prefix:<BR><INPUT NAME="Feld9" SIZE=20 MAXLENGHT=30><BR>
+6LoWPAN-Prefix:<BR><INPUT NAME="Feld10" SIZE=20 MAXLENGHT=30><BR>
+PANID:<BR><INPUT NAME="Feld11" SIZE=20 MAXLENGHT=30><BR>
+<BR><INPUT TYPE="checkbox" NAME="Feld12" value="Router"> ROUTER <BR><BR>
 </FORM>
 <BUTTON> OK </BUTTON>
-<BUTTON> <span class="caps">RESET</span> </BUTTON>
+<BUTTON> RESET </BUTTON>
 <BR>
 <h2>Devices</h2>
-<p>Here is the place where you can configure the devices.</p>
-<p>&lt;<span class="caps">FORM</span> name=&#8220;deviceform&#8221; <span class="caps">METHOD</span>=post <span class="caps">ACTION</span>=&quot;&quot;&gt;
-A:&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld1&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-B:&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld2&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-C:&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld3&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR>
-D:&lt;<span class="caps">INPUT</span> <span class="caps">NAME</span>=&#8220;Feld4&#8221; <span class="caps">SIZE</span>=20 <span class="caps">MAXLENGHT</span>=30&gt;<BR></p>
+<p>Configure the devices.</p>
+<FORM name="deviceform" METHOD=post ACTION="">
+A:<INPUT NAME="Feld1" SIZE=20 MAXLENGHT=30><BR>
+B:<INPUT NAME="Feld2" SIZE=20 MAXLENGHT=30><BR>
+C:<INPUT NAME="Feld3" SIZE=20 MAXLENGHT=30><BR>
+D:<INPUT NAME="Feld4" SIZE=20 MAXLENGHT=30><BR>
+A1:<INPUT NAME="Feld5" SIZE=20 MAXLENGHT=30><BR>
+B1:<INPUT NAME="Feld6" SIZE=20 MAXLENGHT=30><BR>
+C1:<INPUT NAME="Feld7" SIZE=20 MAXLENGHT=30><BR>
+D1:<INPUT NAME="Feld8" SIZE=20 MAXLENGHT=30><BR>
 </FORM>
 <BUTTON> OK </BUTTON>
-<BUTTON> <span class="caps">RESET</span> </BUTTON>
+<BUTTON> RESET </BUTTON>
 <div id="ausgabe"></div>
             <p class="hide"><a href="#top">Back to top</a></p>
           </div>
         </div>
 
-        <div id="footer">&copy; 2010 OSD Harald Pichler V1.0pre4 | Generated by <a href="http://webgen.rubyforge.org">webgen</a> | Design by <a href="http://typopichler.at">Tanja Pichler</a></div>
+        <div id="footer">&copy; 2010 OSD Harald Pichler V1.0pre10 | Generated by <a href="http://webgen.rubyforge.org">webgen</a> | Design by <a href="http://typopichler.at">Tanja Pichler</a></div>
       </div>
     </div>
   </body>
