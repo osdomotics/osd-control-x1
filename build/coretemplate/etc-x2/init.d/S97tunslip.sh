@@ -48,7 +48,7 @@ ifconfig eth0 ${ipprefix}${devaddr}/64
 echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
 sleep 2
 # bird ripng
-/sbin/buildbirdconf.sh
+/usr/sbin/buildbirdconf.sh
 sleep 2
 bird -s var/run/bird6.ctl -c /etc/bird.conf
 echo -n "done ";
