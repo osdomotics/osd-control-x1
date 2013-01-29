@@ -2,8 +2,38 @@ Environment
 -----------
 Start the environment:
 
-cd ~/Digi/DigiEL-5.7/workspace/osd-control-x1/build/coretemplate/
+cd ~/Digi/DigiEL-5.2/workspace/meconfig-ipv6-slip-jffs2/build/coretemplate/
 . ./DigiEL.sh
+
+tunslip6
+--------
+cd ~/Digi/DigiEL-5.2/workspace/meconfig-ipv6-slip-jffs2/build/coretemplate/contiki-2.x-20110606/tools
+arm-linux-gcc tunslip6.c -o tunslip6 
+
+flex-2.5.35
+-----------
+1. go to flex (project)/build/coretemplate/
+cd ~/Digi/DigiEL-5.2/workspace/meconfig-ipv6-slip-jffs2/build/coretemplate/flex-2.5.35
+
+2. configure:
+ ./configure  --host=arm-linux --build=i386-linux --prefix=/home/<user>/Digi/DigiEL-5.7/usr
+neu:
+ ./configure  --host=arm-linux --build=i386-linux --prefix=/home/<user>/Digi/DigiEL-5.7/x-tools/arm-unknown-linux-uclibcgnueabi/arm-unknown-linux-uclibcgnueabi/sysroot
+
+edit config.h:
+/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
+   to 0 otherwise. */
+#define HAVE_MALLOC 1
+
+/* Define to rpl_malloc if the replacement function should be used. */
+//#define malloc rpl_malloc //H.P.
+
+/* Define to rpl_realloc if the replacement function should be used. */
+//#define realloc rpl_realloc //HP
+
+3. compile and install the lib type:
+ make
+ make install
 
 libcoap
 -------
@@ -50,7 +80,12 @@ BIRD was configured with the following options:
  make
  make install
 
+strip fails make it self:
+/home/<user>/Digi/DigiEL-5.2/usr/bin/strip bird
+
+
 todo:
 
+disable radvd and use burd with RIPng
 change PAN-ID
 test change ipv6 präfix
