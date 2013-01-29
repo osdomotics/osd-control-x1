@@ -53,8 +53,8 @@ if [  ${CONFIG_X2} ]
   then
     echo "add files X2"
     cp -a "${DEL_PROJ_DIR}/build/coretemplate/etc-x2/."  "${ROOTFS_DIR}/etc"
-    cp -a "${DEL_PROJ_DIR}/build/coretemplate/sbin-x2/."  "${ROOTFS_DIR}/sbin"
-    cp  "${DEL_PROJ_DIR}/build/coretemplate/lib-x2/libcoap/examples/coap-client"  "${ROOTFS_DIR}/bin/coap-client"
+    cp -a "${DEL_PROJ_DIR}/build/coretemplate/usr-sbin-x2/."  "${ROOTFS_DIR}/usr/sbin"
+    cp -a "${DEL_PROJ_DIR}/build/coretemplate/usr-bin-x2/."  "${ROOTFS_DIR}/usr/bin"
     webgen -d "${DEL_PROJ_DIR}/build/coretemplate/webgen/Control-X2/" run
     cp -a "${DEL_PROJ_DIR}/build/coretemplate/webgen/Control-X2/output/."  "${ROOTFS_DIR}/usr/share/www"
     cp -a "${DEL_PROJ_DIR}/build/coretemplate/cgi-bin-x2/."  "${ROOTFS_DIR}/usr/share/www/cgi-bin"
