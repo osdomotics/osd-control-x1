@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # coap.cgi
-# v0.3 2013-01-28 GS (goesta@smekal.at)
+# v0.4 2013-01-30 GS (goesta@smekal.at)
 #
 # this script is part of the Smart-SARAH project
 # http://osdomotics.com
@@ -19,6 +19,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# use internal field separator to split key/value pairs
+OLDIFS="$IFS"
+
+COAP_TIMEOUT=15	# coap client stops after that time
+WGET_TIMEOUT=15	# timeout for rpl table fetch
 CREATE_FORM='1'	# set to something true to create CoAP put forms
 		# WARNING: this may be _extremely_ slow !
 
@@ -44,12 +49,12 @@ then
   QUERY_STRING="${v}"
 fi
 
-# use internal field separator to split key/value pairs
-OLDIFS="$IFS"
-IFS="${IFS}&"
-
 # fetch 6LoWPAN prefix from uboot environment
-RPL_HOST=`ubootenv -p lowpanprefix | cut -d '=' -f 2`"ff:fe00:1"
+UB_PREFIX=`ubootenv -p lowpanprefix`
+IFS="="
+set $UB_PREFIX
+RPL_HOST=$2"ff:fe00:1"
+IFS="$OLDIFS"
 
 NODE=""
 URI=".well-known/core"
@@ -79,10 +84,10 @@ fi
 #
 ### blank queries result in RPL table scan ...
 #
-if [ -z $QUERY_STRING ]
+if [ -z "$QUERY_STRING" ]
 then
   # sed removes html-tags from response
-  RPL_DATA=`wget http://[$RPL_HOST] -O - |sed -e 's/<[^>]*>/\n/g'`
+  RPL_DATA=`wget -T $WGET_TIMEOUT http://[$RPL_HOST] -O - |sed -e 's/<[^>]*>/\n/g'`
   if [ -z "$RPL_DATA" ]
   then
     cat <<EOT
@@ -96,10 +101,11 @@ EOT
     echo "<h1>RPL host table:</h1><ul>"
     for RPL_PART in $RPL_DATA
     do
-      SLASH_POS=`expr index "$RPL_PART" '/' - 1`
-      if [ "$SLASH_POS" -gt 0 ]
+      IFS="${OLDIFS}/"
+      set $RPL_PART
+      if [ "$2" == '128' ]
       then
-        NODE=${RPL_PART:0:$SLASH_POS}
+        NODE=$1
         echo "<li><a href=\"$SCRIPT_NAME?node=$NODE\">$NODE</a></li>"
       fi
     done
@@ -109,6 +115,7 @@ else
 #
 ### process query data ...
 #
+  IFS="${IFS}&"
   for field in $QUERY_STRING
   do
     IFS="${OLDIFS}="
@@ -127,7 +134,7 @@ else
 #
   if [ "$METHOD" == 'get' ]
   then
-    VALUE=`coap-client -m get coap://[${NODE}]:5683/${URI}`
+    VALUE=`coap-client -B $COAP_TIMEOUT -m get coap://[${NODE}]:5683/${URI}`
     if [ "$URI" == '.well-known/core' ]
     then
       #
@@ -191,7 +198,7 @@ EndOfForm
     do
       if [ ${#PARAMETER} -gt 1 ]
       then
-        RESPONSE=`coap-client -m put coap://[${NODE}]:5683/${URI} -e "$PARAMETER" 2>&1`
+        RESPONSE=`coap-client -B $COAP_TIMEOUT -m put coap://[${NODE}]:5683/${URI} -e "$PARAMETER" 2>&1`
         ERRLVL=$?
         if [ -n "$RESPONSE" ]
         then
