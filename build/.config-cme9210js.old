@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.35.14
-# Mon Jan 28 14:11:11 2013
+# Mon Jan 28 14:29:18 2013
 #
 CONFIG_DEL_CME9210JS=y
 
@@ -397,13 +397,15 @@ CONFIG_XFRM=y
 CONFIG_INET=y
 CONFIG_IP_MULTICAST=y
 # CONFIG_IP_ADVANCED_ROUTER is not set
+# CONFIG_ASK_IP_FIB_HASH is not set
+# CONFIG_IP_FIB_TRIE is not set
 CONFIG_IP_FIB_HASH=y
 CONFIG_IP_PNP=y
 # CONFIG_IP_PNP_DELAY is not set
 # CONFIG_IP_PNP_DHCP is not set
 # CONFIG_IP_PNP_BOOTP is not set
 # CONFIG_IP_PNP_RARP is not set
-CONFIG_NET_IPIP=y
+# CONFIG_NET_IPIP is not set
 # CONFIG_NET_IPGRE is not set
 # CONFIG_IP_MROUTE is not set
 # CONFIG_ARPD is not set
@@ -420,6 +422,14 @@ CONFIG_INET_TUNNEL=y
 # CONFIG_INET_DIAG is not set
 # CONFIG_TCP_CONG_ADVANCED is not set
 CONFIG_TCP_CONG_CUBIC=y
+# CONFIG_DEFAULT_BIC is not set
+# CONFIG_DEFAULT_CUBIC is not set
+# CONFIG_DEFAULT_HTCP is not set
+# CONFIG_DEFAULT_HYBLA is not set
+# CONFIG_DEFAULT_VEGAS is not set
+# CONFIG_DEFAULT_VENO is not set
+# CONFIG_DEFAULT_WESTWOOD is not set
+# CONFIG_DEFAULT_RENO is not set
 CONFIG_DEFAULT_TCP_CONG="cubic"
 # CONFIG_TCP_MD5SIG is not set
 CONFIG_IPV6=y
@@ -603,7 +613,7 @@ CONFIG_NETDEVICES=y
 # CONFIG_BONDING is not set
 # CONFIG_MACVLAN is not set
 # CONFIG_EQUALIZER is not set
-# CONFIG_TUN is not set
+CONFIG_TUN=y
 # CONFIG_VETH is not set
 CONFIG_PHYLIB=y
 
