@@ -5,7 +5,7 @@
 ::sysinit:/etc/init.d/rcS
 
 # Start telnet daemon.
-::sysinit:/bin/sh -l -c '/usr/sbin/telnetd -l /bin/sh'
+#::sysinit:/bin/sh -l -c '/usr/sbin/telnetd -l /bin/sh'
 
 # Start busybox console
 ::respawn:/bin/cttyhack /bin/login -f root
